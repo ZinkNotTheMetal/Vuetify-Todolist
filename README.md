@@ -1,5 +1,31 @@
-# vuetify-todolist
+# Vuetify Todo list
+## Technologies
+1. Vue 2.x
+2. Vuetify
+3. Jest - javascript unit testing framework
 
+# Prerequisits
+## Creating the app
+1.  Node.js (with NPM)   
+    a. For Linux Installation
+    ```bash
+    $ sudo apt install nodejs npm
+    ```
+    b. For Windows Installation   
+    Go to [Node.js](https://nodejs.org/en/) Website then install the .msi
+2.  Vue-CLI
+    ```bash
+    $ npm install -g @vue/cli
+    ```
+# How to run
+### Development
+```bash
+$ npm run serve
+```
+### Production
+```bash
+$ npm run build
+```
 ## Project setup
 ```
 npm install
