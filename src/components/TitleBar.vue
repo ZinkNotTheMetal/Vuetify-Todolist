@@ -14,13 +14,16 @@
         ></v-img>
       </template>
 
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-app-bar-title>TODO List</v-app-bar-title>
 
       <v-spacer></v-spacer>
 
     </v-app-bar>
+
+    <NavigationMenu :drawer="drawer" />
+
     <v-sheet
       id="scrolling-techniques-2"
       class="overflow-y-auto"
@@ -32,7 +35,15 @@
 </template>
 
 <script>
+import NavigationMenu from '@/components/NavigationMenu'
+
 export default {
-    name: 'TitleBar'
+    name: 'TitleBar',
+    components: {
+        NavigationMenu,
+    },
+    data: () => ({
+        drawer: false
+    })
 }
 </script>
