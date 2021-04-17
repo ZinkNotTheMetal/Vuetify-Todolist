@@ -40,7 +40,7 @@
     data () {
       return {
         items: [
-          { title: 'Todo List', icon: 'mdi-view-dashboard', to: '/' },
+          { title: 'Todo List', icon: 'mdi-format-list-checks', to: '/' },
           { title: 'Research', icon: 'mdi-feature-search', to: '/research' },
           { title: 'Shopping List', icon: 'mdi-cart', to: '/shopping-list' },
           { title: 'Next to Purchase', icon: 'mdi-credit-card', to: '/next-to-purchase' },
