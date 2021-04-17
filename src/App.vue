@@ -1,27 +1,29 @@
 <template>
-  <v-app>
-    <TitleBar />
+  <v-app id="inspire">
+    
+    <NavigationMenu :drawer="drawer" />
+
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>Application</v-toolbar-title>
+    </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <!--  -->
+      <!-- How to inform Vuetify that there are multiple pages -->
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-import TitleBar from '@/components/TitleBar'
+import NavigationMenu from '@/components/NavigationMenu'
 
 export default {
-  name: 'App',
-
+  data: () => ({ drawer: false }),
   components: {
-    HelloWorld,
-    TitleBar
+    NavigationMenu
   },
-
-  data: () => ({
-    //
-  }),
-};
+}
 </script>

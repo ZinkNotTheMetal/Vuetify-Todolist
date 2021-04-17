@@ -1,7 +1,7 @@
 <template>
   <v-card class="overflow-hidden">
     <v-app-bar
-      absolute
+      
       extended
       dark
       src="sky.jpg"
@@ -25,9 +25,6 @@
     <NavigationMenu :drawer="drawer" />
 
     <v-sheet
-      id="scrolling-techniques-2"
-      class="overflow-y-auto"
-      max-height="600"
     >
       <v-container style="height: 1000px;"></v-container>
     </v-sheet>
