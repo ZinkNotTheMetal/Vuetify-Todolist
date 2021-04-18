@@ -27,6 +27,11 @@
 
         </div>
         </v-list>
+
+        <DeleteConfirmation
+            v-if="1618772279365"
+            :taskId="1618772279365"
+        />
         
     </div>
     
@@ -34,11 +39,13 @@
 
 <script>
 import TodoItem from '@/components/Todo/Item'
+import DeleteConfirmation from '@/components/Modal/DeleteConfirmation'
 
 export default {
     name: 'Todo',
     components: {
         TodoItem,
+        DeleteConfirmation
     },
     data() {
         return {

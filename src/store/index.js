@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 let db = new Localbase('db')
 db.config.debug = false
+let todoCollection = 'todoItems'
 
 export default new Vuex.Store({
   state: {
@@ -59,14 +60,14 @@ export default new Vuex.Store({
         dueDate: null
       }
 
-      db.collection('todoItems').add(newTask).then(() => {
+      db.collection(todoCollection).add(newTask).then(() => {
         commit('addTask', newTask)
         commit('openSnackBar', 'New Task Successfully Added!')
       })
     },
 
     async deleteTask({ commit }, taskId) {
-      db.collection('todoItems').doc({ id: taskId }).delete().then(() => {
+      db.collection(todoCollection).doc({ id: taskId }).delete().then(() => {
         commit('deleteTask', taskId)
         commit('openSnackBar', 'Task Successfully Removed!')
       })
@@ -74,7 +75,7 @@ export default new Vuex.Store({
 
     async flipTaskCompleted({ state, commit }, taskId) {
       let task = state.todoItems.filter(task => task.id === taskId)[0]
-      db.collection('todoItems').doc({ id: taskId }).update({
+      db.collection(todoCollection).doc({ id: taskId }).update({
         isDone: !task.isDone
       }).then(() => {
         commit('flipTaskCompleted', taskId)
