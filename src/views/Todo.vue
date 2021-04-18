@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+    <div class="pa-6">
         <span>On TODO Page</span>
     </div>
     
@@ -8,6 +8,6 @@
 
 <script>
 export default {
-    name: 'Todo list'
+    name: 'Todo'
 }
 </script>
