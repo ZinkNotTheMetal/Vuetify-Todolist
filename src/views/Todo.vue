@@ -6,7 +6,7 @@
             class="pt-0"
         >
         <div
-            v-for="task in todo_items"
+            v-for="task in $store.state.todoItems"
             :key="task.id"
         >
             <v-list-item
@@ -30,14 +30,26 @@
                     </v-list-item-content>
                 </template>
 
-                <v-list-item-action>
-                    <v-btn
-                        @click.stop="editTask(task.id)" 
-                        icon
-                    >
-                        <v-icon color="grey lighten-1">mdi-pencil</v-icon>
-                    </v-btn>
-                </v-list-item-action>
+                <v-menu
+                    bottom
+                    left
+                    :offset-x="true"
+                    :close-on-content-click="true"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            dark
+                            icon
+                            v-bind="attrs"
+                            v-on="on"
+                        >
+                            <v-icon color="grey lighten-1">mdi-dots-vertical</v-icon>
+                        </v-btn>
+                    </template>
+
+                    <EditTaskDropdown :taskId="task.id" />
+
+                </v-menu>
                 
             </v-list-item>
 
@@ -51,22 +63,20 @@
 </template>
 
 <script>
+import EditTaskDropdown from '@/components/EditTaskDropdown'
+
 export default {
     name: 'Todo',
+    components: {
+        EditTaskDropdown,
+    },
     data() {
         return {
-            todo_items: [
-                { id: 1, title: 'wake up', isDone: false },
-                { id: 2, title: 'peel bananas', isDone: false },
-                { id: 3, title: 'eat bananas', isDone: false },
-                { id: 4, title: 'poo bananas', isDone: false },
-            ]
+            showEditMenu: false,
         }
     },
     methods: {
         editTask(taskId) {
-            let task = this.todo_items.filter(f => f.id === taskId)[0]
-            console.log(task)
         }
     },
 }
