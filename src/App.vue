@@ -3,13 +3,11 @@
     
     <NavigationMenu :drawer="drawer" />
 
-    <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Application</v-toolbar-title>
-    </v-app-bar>
+    <TitleBar v-model="drawer" />
 
     <v-main>
+      {{ drawer }}
+
       <!--  -->
       <!-- How to inform Vuetify that there are multiple pages -->
       <router-view></router-view>
@@ -19,11 +17,13 @@
 
 <script>
 import NavigationMenu from '@/components/NavigationMenu'
+import TitleBar from '@/components/TitleBar'
 
 export default {
   data: () => ({ drawer: false }),
   components: {
-    NavigationMenu
+    NavigationMenu,
+    TitleBar
   },
 }
 </script>
