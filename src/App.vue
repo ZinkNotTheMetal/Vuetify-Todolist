@@ -6,9 +6,6 @@
     <TitleBar v-model="drawer" />
 
     <v-main>
-      {{ drawer }}
-
-      <!--  -->
       <!-- How to inform Vuetify that there are multiple pages -->
       <router-view></router-view>
     </v-main>
