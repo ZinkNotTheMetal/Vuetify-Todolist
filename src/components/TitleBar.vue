@@ -16,7 +16,7 @@
       </template>
 
       <v-app-bar-nav-icon 
-        @click="invertDrawer()"
+        @click="$store.commit('flipDrawer')"
       ></v-app-bar-nav-icon>
 
       <v-app-bar-title>My Lists</v-app-bar-title>
@@ -29,19 +29,6 @@
 
 <script>
 export default {
-    name: 'TitleBar',
-    props: {
-        drawer: {
-            type: Boolean,
-            required: true,
-            default: false
-        },
-    },
-    methods: {
-        invertDrawer() {
-            this.drawer = !this.drawer
-            this.$emit('input', this.drawer)      
-        }
-    },
+    name: 'TitleBar'
 }
 </script>

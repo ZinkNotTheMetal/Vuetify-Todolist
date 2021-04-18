@@ -1,7 +1,7 @@
 <template>
     <v-navigation-drawer 
         app
-        v-model="drawer"
+        v-model="$store.state.drawer"
     >
       <v-list-item>
         <v-list-item-content>
@@ -36,24 +36,17 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        items: [
-          { title: 'Todo List', icon: 'mdi-format-list-checks', to: '/' },
-          { title: 'Research', icon: 'mdi-feature-search', to: '/research' },
-          { title: 'Shopping List', icon: 'mdi-cart', to: '/shopping-list' },
-          { title: 'Next to Purchase', icon: 'mdi-credit-card', to: '/next-to-purchase' },
-          { title: 'About', icon: 'mdi-help-box', to: '/about' },
-        ],
-        right: null,
-      }
-    },
-    props: {
-        drawer: {
-            type: Boolean,
-            default: false
-        },
-    },
-  }
+export default {
+  data () {
+    return {
+      items: [
+        { title: 'Todo List', icon: 'mdi-format-list-checks', to: '/' },
+        { title: 'Research', icon: 'mdi-feature-search', to: '/research' },
+        { title: 'Shopping List', icon: 'mdi-cart', to: '/shopping-list' },
+        { title: 'Next to Purchase', icon: 'mdi-credit-card', to: '/next-to-purchase' },
+        { title: 'About', icon: 'mdi-help-box', to: '/about' },
+      ],
+    }
+  },
+}
 </script>

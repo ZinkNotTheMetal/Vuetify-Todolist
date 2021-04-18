@@ -1,9 +1,9 @@
 <template>
   <v-app id="inspire">
     
-    <NavigationMenu :drawer="drawer" />
+    <NavigationMenu />
 
-    <TitleBar v-model="drawer" />
+    <TitleBar />
 
     <v-main>
       <!-- How to inform Vuetify that there are multiple pages -->
@@ -17,7 +17,6 @@ import NavigationMenu from '@/components/NavigationMenu'
 import TitleBar from '@/components/TitleBar'
 
 export default {
-  data: () => ({ drawer: false }),
   components: {
     NavigationMenu,
     TitleBar
