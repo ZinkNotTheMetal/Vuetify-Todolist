@@ -1,5 +1,21 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="pa-4">
+    <h2>About Vuetify Todo</h2>
+    <div class="content">
+      <span>Version: {{ version }}</span>
+    </div>
   </div>
 </template>
+
+<script>
+import { version } from '/package.json'
+
+export default {
+  name: 'About',
+  data() {
+    return {
+      version: version
+    }
+  },
+}
+</script>
