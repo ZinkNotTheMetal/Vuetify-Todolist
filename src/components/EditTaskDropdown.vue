@@ -63,8 +63,7 @@ export default {
     methods: {
         cancel() {},
         deleteTask(taskId) {
-            this.$store.commit('deleteTask', taskId)
-            console.log(`Deleting Task ${taskId}`)
+            this.$store.dispatch('deleteTask', taskId)
         }
     },
 }
