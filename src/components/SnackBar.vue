@@ -1,12 +1,12 @@
 <template class="text-center">
 
     <v-snackbar
-      v-model="$store.state.openSnackBar"
+      v-model="$store.state.snackbar.show"
       color="blue-grey"
       rounded="pill"
       class="text-center"
     >
-        {{ $store.state.snackBarText }}
+        {{ $store.state.snackbar.text }}
       
         <template v-slot:action="{ attrs }">
             <v-btn

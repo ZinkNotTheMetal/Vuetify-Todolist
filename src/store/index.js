@@ -1,19 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Localbase from 'localbase'
 
 Vue.use(Vuex)
+
+let db = new Localbase('db')
+db.config.debug = false
 
 export default new Vuex.Store({
   state: {
       drawer: false,
-      openSnackBar: false,
-      snackBarText: '',
-      todoItems: [
-        { id: 1, title: 'wake up', isDone: false },
-        { id: 2, title: 'peel bananas', isDone: false },
-        { id: 3, title: 'eat bananas', isDone: false },
-        { id: 4, title: 'poo bananas', isDone: false },
-      ]
+      snackbar: {
+        show: false,
+        text: ''
+      },
+      todoItems: []
   },
 
   mutations: {
@@ -26,31 +27,64 @@ export default new Vuex.Store({
       state.todoItems = remainingTasks
     },
 
-    addTask(state, newTaskTitle) {
-      state.todoItems.push(
-        { id: Date.now(), title: newTaskTitle, isDone: false }
-      )
+    flipTaskCompleted(state, taskId) {
+      let taskChanged = state.todoItems.filter(task => task.id === taskId)[0]
+      taskChanged.isDone = !taskChanged.isDone
+    },
+
+    setTasks(state, tasks) {
+      state.todoItems = tasks
+    },
+
+    addTask(state, newTask) {
+      state.todoItems.push(newTask)
     },
 
     openSnackBar(state, snackBarText) {
-      state.openSnackBar = true
-      state.snackBarText = snackBarText
+      state.snackbar.show = true
+      state.snackbar.text = snackBarText
     },
 
     closeSnackBar(state) {
-      state.openSnackBar = false
+      state.snackbar.show = false
     }
   },
 
   actions: {
     async addTask({ commit }, newTaskTitle) {
-      commit('addTask', newTaskTitle)
-      commit('openSnackBar', 'New Task Successfully Added!')
+      let newTask = {
+        id: Date.now(),
+        title: newTaskTitle,
+        isDone: false,
+        dueDate: null
+      }
+
+      db.collection('todoItems').add(newTask).then(() => {
+        commit('addTask', newTask)
+        commit('openSnackBar', 'New Task Successfully Added!')
+      })
     },
 
     async deleteTask({ commit }, taskId) {
-      commit('deleteTask', taskId)
-      commit('openSnackBar', 'Task Successfully Removed!')
+      db.collection('todoItems').doc({ id: taskId }).delete().then(() => {
+        commit('deleteTask', taskId)
+        commit('openSnackBar', 'Task Successfully Removed!')
+      })
+    },
+
+    async flipTaskCompleted({ state, commit }, taskId) {
+      let task = state.todoItems.filter(task => task.id === taskId)[0]
+      db.collection('todoItems').doc({ id: taskId }).update({
+        isDone: !task.isDone
+      }).then(() => {
+        commit('flipTaskCompleted', taskId)
+      })
+    },
+
+    async setAllTasks({ commit }) {
+      db.collection('todoItems').get().then(documents => {
+        commit('setTasks', documents)
+      })
     }
   },
 

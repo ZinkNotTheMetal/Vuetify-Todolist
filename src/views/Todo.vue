@@ -21,49 +21,7 @@
             v-for="task in $store.state.todoItems"
             :key="task.id"
         >
-            <v-list-item
-                :class="{ 'blue lighten-4' : task.isDone }"
-                @click="task.isDone = !task.isDone"
-            >
-                <template>
-                    <v-list-item-action>
-                    <v-checkbox
-                        :input-value="task.isDone"
-                        color="primary"
-                    ></v-checkbox>
-                    </v-list-item-action>
-
-                    <v-list-item-content>
-                    <v-list-item-title
-                        :class="{ 'text-decoration-line-through' : task.isDone }"
-                    >
-                        {{ task.title }}
-                    </v-list-item-title>
-                    </v-list-item-content>
-                </template>
-
-                <v-menu
-                    bottom
-                    left
-                    :offset-x="true"
-                    :close-on-content-click="true"
-                >
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                            dark
-                            icon
-                            v-bind="attrs"
-                            v-on="on"
-                        >
-                            <v-icon color="grey lighten-1">mdi-dots-vertical</v-icon>
-                        </v-btn>
-                    </template>
-
-                    <EditTaskDropdown :taskId="task.id" />
-
-                </v-menu>
-                
-            </v-list-item>
+            <TodoItem :task="task" />
 
             <v-divider></v-divider>
 
@@ -75,12 +33,12 @@
 </template>
 
 <script>
-import EditTaskDropdown from '@/components/EditTaskDropdown'
+import TodoItem from '@/components/Todo/Item'
 
 export default {
     name: 'Todo',
     components: {
-        EditTaskDropdown,
+        TodoItem,
     },
     data() {
         return {
@@ -92,7 +50,13 @@ export default {
         async addTask() {
             await this.$store.dispatch('addTask', this.newTaskTitle)
             this.newTaskTitle = ''
+        },
+        async setTasksFromDb() {
+            await this.$store.dispatch('setAllTasks')
         }
+    },
+    mounted () {
+        this.setTasksFromDb();
     },
 }
 </script>
