@@ -2,6 +2,18 @@
 
     <div class="">
 
+        <v-text-field
+            class="pa-3"
+            v-model="newTaskTitle"
+            clearable
+            hide-details
+            outlined
+            label="Add a Task"
+            append-icon="mdi-plus"
+            @click:append="addTask"
+            @keyup.enter="addTask"
+          ></v-text-field>
+
         <v-list
             class="pt-0"
         >
@@ -73,10 +85,13 @@ export default {
     data() {
         return {
             showEditMenu: false,
+            newTaskTitle: ''
         }
     },
     methods: {
-        editTask(taskId) {
+        async addTask() {
+            await this.$store.dispatch('addTask', this.newTaskTitle)
+            this.newTaskTitle = ''
         }
     },
 }

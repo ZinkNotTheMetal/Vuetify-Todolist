@@ -22,10 +22,19 @@ export default new Vuex.Store({
     deleteTask(state, taskId) {
       let remainingTasks = state.todoItems.filter(f => f.id !== taskId)
       state.todoItems = remainingTasks
+    },
+
+    addTask(state, newTaskTitle) {
+      state.todoItems.push(
+        { id: Date.now(), title: newTaskTitle, isDone: false }
+      )
     }
   },
 
   actions: {
+    async addTask({ commit }, newTaskTitle) {
+      commit('addTask', newTaskTitle)
+    }
   },
 
   modules: {
