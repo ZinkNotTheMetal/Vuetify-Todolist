@@ -21,8 +21,6 @@
 
       <v-app-bar-title>My Lists</v-app-bar-title>
 
-      <v-spacer></v-spacer>
-
     </v-app-bar>
 
 </template>

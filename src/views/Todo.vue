@@ -1,39 +1,51 @@
 <template>
 
-    <div class="pa-6">
-        
-        <v-list
-            subheader
-            two-line
-            flat
-        >
+    <div class="">
 
-            <v-list-item-group
-                v-model="settings"
-                multiple
+        <v-list
+            class="pt-0"
+        >
+        <div
+            v-for="task in todo_items"
+            :key="task.id"
+        >
+            <v-list-item
+                :class="{ 'blue lighten-4' : task.isDone }"
+                @click="task.isDone = !task.isDone"
             >
-                
-                <v-list-item
-                    v-for="item in todo_items"
-                    :key="item.id"
-                >
                 <template>
                     <v-list-item-action>
                     <v-checkbox
-                        :input-value="item.isDone"
+                        :input-value="task.isDone"
                         color="primary"
                     ></v-checkbox>
                     </v-list-item-action>
 
                     <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    <v-list-item-title
+                        :class="{ 'text-decoration-line-through' : task.isDone }"
+                    >
+                        {{ task.title }}
+                    </v-list-item-title>
                     </v-list-item-content>
                 </template>
-                </v-list-item>
 
-            </v-list-item-group>
+                <v-list-item-action>
+                    <v-btn
+                        @click.stop="editTask(task.id)" 
+                        icon
+                    >
+                        <v-icon color="grey lighten-1">mdi-pencil</v-icon>
+                    </v-btn>
+                </v-list-item-action>
+                
+            </v-list-item>
+
+            <v-divider></v-divider>
+
+        </div>
         </v-list>
-
+        
     </div>
     
 </template>
@@ -49,6 +61,12 @@ export default {
                 { id: 3, title: 'eat bananas', isDone: false },
                 { id: 4, title: 'poo bananas', isDone: false },
             ]
+        }
+    },
+    methods: {
+        editTask(taskId) {
+            let task = this.todo_items.filter(f => f.id === taskId)[0]
+            console.log(task)
         }
     },
 }
