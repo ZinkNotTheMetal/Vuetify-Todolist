@@ -1,11 +1,28 @@
 <template>
 
-    <v-app-bar 
-        app
+    <v-app-bar
+      app
+      absolute
+      color="primary"
+      dark
+      prominent
+      src="sky.jpg"
     >
-      <v-app-bar-nav-icon @click="invertDrawer()"></v-app-bar-nav-icon>
+      <template v-slot:img="{ props }">
+        <v-img
+          v-bind="props"
+          gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"
+        ></v-img>
+      </template>
 
-      <v-toolbar-title>Vuetify TODO List</v-toolbar-title>
+      <v-app-bar-nav-icon 
+        @click="invertDrawer()"
+      ></v-app-bar-nav-icon>
+
+      <v-app-bar-title>My Lists</v-app-bar-title>
+
+      <v-spacer></v-spacer>
+
     </v-app-bar>
 
 </template>
