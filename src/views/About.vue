@@ -1,7 +1,7 @@
 <template>
   <div class="pa-4">
     <h2>About Vuetify Todo</h2>
-    <div class="content">
+    <div class="py-6">
       <span>Version: {{ version }}</span>
     </div>
   </div>
