@@ -12,26 +12,22 @@
             append-icon="mdi-plus"
             @click:append="addTask"
             @keyup.enter="addTask"
-          ></v-text-field>
+        >
+        </v-text-field>
 
         <v-list
             class="pt-0"
         >
-        <div
-            v-for="task in $store.state.todoItems"
-            :key="task.id"
-        >
-            <TodoItem :task="task" />
+            <div
+                v-for="task in $store.state.todoItems"
+                :key="task.id"
+            >
+                <TodoItem :task="task" />
 
-            <v-divider></v-divider>
+                <v-divider></v-divider>
 
-        </div>
+            </div>
         </v-list>
-
-        <DeleteConfirmation
-            v-if="1618772279365"
-            :taskId="1618772279365"
-        />
         
     </div>
     

@@ -31,6 +31,9 @@ export default {
     methods: {
         closeHandler: function() {
             this.show = false
+        },
+        openModal: function() {
+            this.show = true
         }
     },
 }

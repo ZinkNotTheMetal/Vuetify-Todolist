@@ -59,10 +59,15 @@ export default {
         taskId: {
             type: Number
         },
+        openModal: {
+            type: Boolean,
+            required: true,
+            default: false
+        }
     },
     methods: {
         async deleteSelectedTask() {
-            await this.$store.dispatch('deleteTask', taskId)
+            await this.$store.dispatch('deleteTask', this.taskId)
             this.$emit('closeHandler')
         }
     },
