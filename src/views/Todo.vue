@@ -27,6 +27,15 @@
                 <v-divider></v-divider>
 
             </div>
+
+            <div v-if="$store.state.todoItems.length === 0">
+                <div class="text-center">
+                        <v-icon right size="175" color="green lighten-3">mdi-check</v-icon>
+                    <div>
+                        <span class="font-weight-thin">All tasks are completed!</span>
+                    </div>
+                </div>
+            </div>
         </v-list>
         
     </div>
