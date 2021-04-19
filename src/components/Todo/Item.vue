@@ -19,13 +19,13 @@
             </v-list-item-title>
         </v-list-item-content>
 
-        <template v-if="!task.isDone">
+        <template v-if="!task.isDone && task.dueDate">
             <v-list-item-icon>
                 <v-icon size="20">mdi-calendar</v-icon>
             </v-list-item-icon>
             <span class="body-2 font-weight-thin">{{ formattedDueDate }}</span>
         </template>
-        <template v-else>
+        <template v-else-if="task.isDone && task.dueDate">
             <v-list-item-icon>
                 <v-icon size="20" color="green">mdi-check</v-icon>
             </v-list-item-icon>
