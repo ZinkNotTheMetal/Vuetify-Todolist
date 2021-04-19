@@ -33,6 +33,11 @@ export default new Vuex.Store({
       taskChanged.isDone = !taskChanged.isDone
     },
 
+    updateDueDate(state, { taskId, newDueDate }) {
+      let taskChanged = state.todoItems.filter(task => task.id === taskId)[0]
+      taskChanged.dueDate = newDueDate
+    },
+
     setTasks(state, tasks) {
       state.todoItems = tasks
     },
@@ -82,8 +87,19 @@ export default new Vuex.Store({
       })
     },
 
+    async updateDueDate({ commit }, payload) {
+      let taskId = payload.taskId
+      let newDueDate = payload.newDueDate
+
+      db.collection(todoCollection).doc({ id: taskId }).update({
+        dueDate: newDueDate
+      }).then(() => {
+        commit('updateDueDate', { taskId, newDueDate })
+      })
+    },
+
     async setAllTasks({ commit }) {
-      db.collection('todoItems').get().then(documents => {
+      db.collection(todoCollection).get().then(documents => {
         commit('setTasks', documents)
       })
     }

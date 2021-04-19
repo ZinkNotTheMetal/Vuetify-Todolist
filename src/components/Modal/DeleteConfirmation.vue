@@ -4,6 +4,7 @@
         transition="dialog-top-transition"
         max-width="500"
         v-model="openModal"
+        @click:outside="$emit('close-modal')"
     >
         <v-card>
             <v-toolbar
