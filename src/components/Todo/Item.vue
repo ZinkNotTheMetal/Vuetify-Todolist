@@ -38,7 +38,7 @@
                 </v-btn>
             </template>
 
-            <EditTaskDropdown :taskId="task.id" />
+            <EditTaskDropdown :task="task" />
 
         </v-menu>
                 

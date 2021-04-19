@@ -4,8 +4,6 @@
 
         <v-list>
 
-            {{ showDeletedModal }}
-
             <v-list-item
                 @click.stop=""
             >
@@ -29,7 +27,7 @@
             </v-list-item>
 
             <v-list-item
-                @click.stop="toggleModal"
+                @click.stop="toggleDeletedModal()"
             >
                 <v-list-item-icon>
                     <v-icon>mdi-delete</v-icon>
@@ -51,13 +49,21 @@
             </v-list-item>
 
         </v-list>
+        <!--
+        <EditTitleModal
+            :openModal="showEditModal"
+            :item="task"
+            :action="'updateTaskTitle'"
+            @close-modal="toggleModal(showEditModal)"
+        />
+        -->
 
         <DeleteConfirmationModal
             :openModal="showDeletedModal"
-            :itemId="taskId"
+            :itemId="task.id"
             :itemType="'task'"
             :action="'deleteTask'"
-            @close-modal="toggleModal"
+            @close-modal="toggleDeletedModal()"
         />
 
     </div>
@@ -74,17 +80,18 @@ export default {
     },
     data() {
         return {
-            showDeletedModal: false
+            showDeletedModal: false,
+            showEditModal: false,
         }
     },
     props: {
-        taskId: {
-            type: Number
+        task: {
+            type: Object
         },
     },
     methods: {
         cancel() {},
-        toggleModal() {
+        toggleDeletedModal() {
             this.showDeletedModal = !this.showDeletedModal
         },
     },
