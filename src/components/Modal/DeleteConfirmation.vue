@@ -1,33 +1,31 @@
 <template>
 
-    <ModalTemplate>
-
-        <template v-slot:modal-header>
+    <v-dialog
+        transition="dialog-top-transition"
+        max-width="500"
+        v-model="openModal"
+    >
+        <v-card>
             <v-toolbar
                 color="red"
                 dark
             >
-                Remove Task?
+                Remove {{ itemType }}?
             </v-toolbar>
-        </template>
-
-        <template v-slot:modal-text>
 
             <v-card-text>
                 <div class="px-1 py-4">
-                    <span>Are you sure you want to remove this task?</span>
+                    <span>Are you sure you want to remove this {{ itemType }}?</span>
                 </div>
                 
             </v-card-text>
-        </template>
 
-        <template v-slot:modal-actions="{closeHandler}">
 
             <v-card-actions class="justify-end">
                 <v-btn
                     text
                     color="black"
-                    @click="closeHandler"
+                    @click="$emit('close-modal')"
                 >
                     CANCEL
                 </v-btn>
@@ -35,40 +33,44 @@
                 <v-btn
                     text
                     color="red"
-                    @click="deleteSelectedTask()"
+                    @click="deleteSelectedItem()"
                 >
                     DELETE
                 </v-btn>
             </v-card-actions>
+    
+        </v-card>
 
-        </template>
-
-    </ModalTemplate>
+    </v-dialog>
 
 </template>
 
 <script>
-import ModalTemplate from '@/components/Modal/Template'
-
 export default {
     name: 'DeleteConfirmationModal',
-    components: {
-        ModalTemplate,
-    },
     props: {
-        taskId: {
+        itemId: {
             type: Number
+        },
+        itemType: {
+            type: String,
+            required: true,
+            default: 'item'
         },
         openModal: {
             type: Boolean,
             required: true,
             default: false
+        },
+        action: {
+            type: String,
+            required: true
         }
     },
     methods: {
-        async deleteSelectedTask() {
-            await this.$store.dispatch('deleteTask', this.taskId)
-            this.$emit('closeHandler')
+        async deleteSelectedItem() {
+            await this.$store.dispatch(this.action, this.itemId)
+            this.$emit('close-modal')
         }
     },
 }
