@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 let db = new Localbase('db')
 db.config.debug = false
+let todoCollection = 'todoItems'
 
 export default new Vuex.Store({
   state: {
@@ -32,6 +33,12 @@ export default new Vuex.Store({
       taskChanged.isDone = !taskChanged.isDone
     },
 
+    updateTask(state, { taskId, newTaskTitle, newDueDate }) {
+      let taskChanged = state.todoItems.filter(task => task.id === taskId)[0]
+      taskChanged.dueDate = newDueDate
+      taskChanged.title = newTaskTitle
+    },
+
     setTasks(state, tasks) {
       state.todoItems = tasks
     },
@@ -51,6 +58,7 @@ export default new Vuex.Store({
   },
 
   actions: {
+    // Add a new Todo Task
     async addTask({ commit }, newTaskTitle) {
       let newTask = {
         id: Date.now(),
@@ -59,31 +67,48 @@ export default new Vuex.Store({
         dueDate: null
       }
 
-      db.collection('todoItems').add(newTask).then(() => {
+      db.collection(todoCollection).add(newTask).then(() => {
         commit('addTask', newTask)
         commit('openSnackBar', 'New Task Successfully Added!')
       })
     },
 
+    // Remove an existing todo task
     async deleteTask({ commit }, taskId) {
-      db.collection('todoItems').doc({ id: taskId }).delete().then(() => {
+      db.collection(todoCollection).doc({ id: taskId }).delete().then(() => {
         commit('deleteTask', taskId)
         commit('openSnackBar', 'Task Successfully Removed!')
       })
     },
 
+    // Toggle whether a task is completed
     async flipTaskCompleted({ state, commit }, taskId) {
       let task = state.todoItems.filter(task => task.id === taskId)[0]
-      db.collection('todoItems').doc({ id: taskId }).update({
+      db.collection(todoCollection).doc({ id: taskId }).update({
         isDone: !task.isDone
       }).then(() => {
         commit('flipTaskCompleted', taskId)
       })
     },
 
+    // Set tasks from db to store
     async setAllTasks({ commit }) {
-      db.collection('todoItems').get().then(documents => {
+      db.collection(todoCollection).get().then(documents => {
         commit('setTasks', documents)
+      })
+    },
+
+    // Update task from edit menu
+    async updateTask({ commit }, payload) {
+      let taskId = payload.id
+      let newDueDate = payload.dueDate
+      let newTaskTitle = payload.title
+
+      db.collection(todoCollection).doc({ id: taskId }).update({
+        dueDate: newDueDate,
+        title: newTaskTitle
+      }).then(() => {
+        commit('updateTask', { taskId, newTaskTitle, newDueDate })
       })
     }
   },
