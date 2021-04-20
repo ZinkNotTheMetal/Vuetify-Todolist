@@ -16,7 +16,7 @@
             </v-list-item>
 
             <v-list-item
-                @click.stop=""
+                @click.stop="toggleEditModal()"
             >
                 <v-list-item-icon>
                     <v-icon>mdi-pencil</v-icon>
@@ -67,14 +67,12 @@
             @date-changed="setDueDate"
         />
 
-        <!--
-        <EditTitleModal
+        <EditTaskModal
             :openModal="showEditModal"
-            :item="task"
+            :task="task"
             :action="'updateTaskTitle'"
-            @close-modal="toggleModal(showEditModal)"
+            @close-modal="toggleEditModal()"
         />
-        -->
 
         <DeleteConfirmationModal
             :openModal="showDeletedModal"
@@ -90,12 +88,14 @@
 
 <script>
 import DatePickerModal from '@/components/Modal/DatePicker'
+import EditTaskModal from '@/components/Modal/EditTaskModal'
 import DeleteConfirmationModal from '@/components/Modal/DeleteConfirmation'
 
 export default {
     name: 'EditTaskDropdown',
     components: {
         DatePickerModal,
+        EditTaskModal,
         DeleteConfirmationModal,
     },
     data() {
@@ -117,6 +117,9 @@ export default {
         },
         toggleDueDateModal() {
             this.showDueDatePicker = !this.showDueDatePicker
+        },
+        toggleEditModal() {
+            this.showEditModal = !this.showEditModal
         },
         setDueDate(newDueDate) {
             this.$store.dispatch('updateDueDate', { taskId: this.task.id, newDueDate: newDueDate })
