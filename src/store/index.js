@@ -33,9 +33,10 @@ export default new Vuex.Store({
       taskChanged.isDone = !taskChanged.isDone
     },
 
-    updateDueDate(state, { taskId, newDueDate }) {
+    updateTask(state, { taskId, newTaskTitle, newDueDate }) {
       let taskChanged = state.todoItems.filter(task => task.id === taskId)[0]
       taskChanged.dueDate = newDueDate
+      taskChanged.title = newTaskTitle
     },
 
     setTasks(state, tasks) {
@@ -57,6 +58,7 @@ export default new Vuex.Store({
   },
 
   actions: {
+    // Add a new Todo Task
     async addTask({ commit }, newTaskTitle) {
       let newTask = {
         id: Date.now(),
@@ -71,6 +73,7 @@ export default new Vuex.Store({
       })
     },
 
+    // Remove an existing todo task
     async deleteTask({ commit }, taskId) {
       db.collection(todoCollection).doc({ id: taskId }).delete().then(() => {
         commit('deleteTask', taskId)
@@ -78,6 +81,7 @@ export default new Vuex.Store({
       })
     },
 
+    // Toggle whether a task is completed
     async flipTaskCompleted({ state, commit }, taskId) {
       let task = state.todoItems.filter(task => task.id === taskId)[0]
       db.collection(todoCollection).doc({ id: taskId }).update({
@@ -87,20 +91,24 @@ export default new Vuex.Store({
       })
     },
 
-    async updateDueDate({ commit }, payload) {
-      let taskId = payload.taskId
-      let newDueDate = payload.newDueDate
-
-      db.collection(todoCollection).doc({ id: taskId }).update({
-        dueDate: newDueDate
-      }).then(() => {
-        commit('updateDueDate', { taskId, newDueDate })
-      })
-    },
-
+    // Set tasks from db to store
     async setAllTasks({ commit }) {
       db.collection(todoCollection).get().then(documents => {
         commit('setTasks', documents)
+      })
+    },
+
+    // Update task from edit menu
+    async updateTask({ commit }, payload) {
+      let taskId = payload.id
+      let newDueDate = payload.dueDate
+      let newTaskTitle = payload.title
+
+      db.collection(todoCollection).doc({ id: taskId }).update({
+        dueDate: newDueDate,
+        title: newTaskTitle
+      }).then(() => {
+        commit('updateTask', { taskId, newTaskTitle, newDueDate })
       })
     }
   },

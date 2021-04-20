@@ -122,7 +122,7 @@ export default {
             this.showEditModal = !this.showEditModal
         },
         setDueDate(newDueDate) {
-            this.$store.dispatch('updateDueDate', { taskId: this.task.id, newDueDate: newDueDate })
+            this.$store.dispatch('updateTask', { id: this.task.id, title: this.task.title, dueDate: newDueDate })
             this.showDueDatePicker = false
         }
     },

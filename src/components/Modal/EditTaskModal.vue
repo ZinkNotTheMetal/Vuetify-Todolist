@@ -97,7 +97,14 @@ export default {
         }
     },
     methods: {
-        updateTask() {
+        async updateTask() {
+            let task = {
+                id: this.task.id,
+                title: this.newTaskTitle,
+                dueDate: this.newDueDate
+            }
+
+            await this.$store.dispatch('updateTask', task)
             this.$emit('close-modal')
         }
     },
