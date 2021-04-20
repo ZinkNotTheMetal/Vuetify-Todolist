@@ -60,6 +60,7 @@ export default {
     },
     methods: {
         async addTask() {
+            if(this.newTaskTitle === '') return false;
             await this.$store.dispatch('addTask', this.newTaskTitle)
             this.newTaskTitle = ''
         },
