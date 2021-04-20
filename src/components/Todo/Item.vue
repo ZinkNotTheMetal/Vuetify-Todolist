@@ -1,7 +1,7 @@
 <template>
 
     <v-list-item
-        :class="{ 'blue lighten-4' : task.isDone, 'red lighten-4': isPastDue }"
+        :class="{ 'blue lighten-4' : task.isDone, 'red lighten-4': isPastDue, 'yellow lighten-4': isDueToday }"
         @click="flipTaskCompleted(task.id)"
     >
         <v-list-item-action>
@@ -73,10 +73,14 @@ export default {
     computed: {
         isPastDue() {
             if (this.task.dueDate === null || this.task.dueDate === undefined) return false;
-            return new Date() >= Date.parse(this.task.dueDate)
+            return this.$moment().isAfter(this.task.dueDate, 'day')
+        },
+        isDueToday() {
+            if (this.task.dueDate === null || this.task.dueDate === undefined) return false;
+            return this.$moment().isSame(this.task.dueDate, 'day')
         },
         formattedDueDate() {
-            return new Date(this.task.dueDate).toLocaleDateString("en-us", { month: 'short', day: 'numeric'}) 
+            return this.$moment(this.task.dueDate).format('MMM Do')
         }
     },
     methods: {

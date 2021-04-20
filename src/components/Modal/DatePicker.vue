@@ -28,7 +28,7 @@ export default {
     },
     data() {
         return {
-            dateSelected: new Date().toISOString().substr(0, 10),
+            dateSelected: this.$moment().toISOString().substr(0, 10),
         }
     },
     methods: {

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Localbase from 'localbase'
+import moment from 'moment'
 
 Vue.use(Vuex)
 
@@ -61,7 +62,7 @@ export default new Vuex.Store({
     // Add a new Todo Task
     async addTask({ commit }, newTaskTitle) {
       let newTask = {
-        id: Date.now(),
+        id: moment().format('X'),
         title: newTaskTitle,
         isDone: false,
         dueDate: null
