@@ -6,7 +6,7 @@ import vuetify from './plugins/vuetify';
 import moment from 'moment'
 
 Vue.config.productionTip = false
-Vue.prototype.moment = moment
+Vue.prototype.$moment = moment
 
 new Vue({
   router,
