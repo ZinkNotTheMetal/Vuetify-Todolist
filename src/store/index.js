@@ -110,6 +110,7 @@ export default new Vuex.Store({
         title: newTaskTitle
       }).then(() => {
         commit('updateTask', { taskId, newTaskTitle, newDueDate })
+        commit('openSnackBar', 'Task Successfully Updated!')
       })
     }
   },
