@@ -18,6 +18,8 @@
     $ npm install -g @vue/cli
     ```
 # How to run
+
+## Within Node
 ### Development
 ```bash
 $ npm run serve
@@ -26,6 +28,14 @@ $ npm run serve
 ```bash
 $ npm run build
 ```
+
+## Within Docker
+This will be in production mode
+```bash
+$ docker build -t vuetify-todolist:latest . 
+$ docker run -p 5000:80 vuetify-todolist:latest
+```
+
 ## Project setup
 ```
 npm install
