@@ -98,9 +98,15 @@ export default new Vuex.Store({
     },
 
     // Set tasks from db to store
-    async setAllTasks({ commit }) {
+    async getTasksFromDataStore({ commit }) {
       db.collection(todoCollection).get().then(documents => {
         commit('setTasks', documents)
+      })
+    },
+
+    async setTasks({ commit }, tasks) {
+      db.collection(todoCollection).set(tasks).then(documents => {
+        commit('setTasks', tasks)
       })
     },
 

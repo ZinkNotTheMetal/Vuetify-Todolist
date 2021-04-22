@@ -85,7 +85,7 @@ export default {
             this.newTaskTitle = ''
         },
         async setTasksFromDb() {
-            await this.$store.dispatch('setAllTasks')
+            await this.$store.dispatch('getTasksFromDataStore')
         },
         async toggleSort() {
             await this.$store.dispatch('toggleSort')
@@ -101,7 +101,7 @@ export default {
                 return this.$store.state.todoItems
             },
             set(value) {
-                this.$store.dispatch('completeSort', value)
+                this.$store.dispatch('setTasks', value)
             }
         }
     },
