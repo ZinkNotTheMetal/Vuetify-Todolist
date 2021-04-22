@@ -5,7 +5,7 @@
         <v-list>
 
             <v-list-item
-                @click.stop=""
+                @click="enableSorting()"
             >
                 <v-list-item-icon>
                     <v-icon>mdi-reorder-horizontal</v-icon>
@@ -112,6 +112,9 @@ export default {
     },
     methods: {
         cancel() {},
+        enableSorting() {
+            this.$store.dispatch('toggleSort')
+        },
         toggleDeletedModal() {
             this.showDeletedModal = !this.showDeletedModal
         },

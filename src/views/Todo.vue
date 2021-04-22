@@ -1,6 +1,6 @@
 <template>
 
-    <div class="">
+    <div class="todo-container">
 
         <v-text-field
             class="pa-3"
@@ -17,7 +17,10 @@
 
         <v-list
             class="pt-0"
+            v-if="$store.state.todoItems.length !== 0"
         >
+            <Draggable v-model="$store.state.todoItems" :sort="$store.state.sorting">
+
             <div
                 v-for="task in $store.state.todoItems"
                 :key="task.id"
@@ -28,27 +31,44 @@
 
             </div>
 
-            <div v-if="$store.state.todoItems.length === 0">
-                <div class="text-center">
-                        <v-icon right size="175" color="green lighten-3">mdi-check</v-icon>
-                    <div>
-                        <span class="font-weight-thin">All tasks are completed!</span>
-                    </div>
+            </Draggable>
+
+        </v-list>
+
+        <div v-if="$store.state.todoItems.length === 0">
+            <div class="text-center">
+                <v-icon right size="175" color="green lighten-3">mdi-check</v-icon>
+                <div>
+                    <span class="font-weight-thin">All tasks are completed!</span>
                 </div>
             </div>
-        </v-list>
-        
+        </div>
+
+        <div v-if="$store.state.sorting" class="text-center">
+            <v-btn
+                absolute
+                left
+                bottom
+                color="primary"
+                @click="toggleSort"
+            >
+                Done
+            </v-btn>
+      </div>
+
     </div>
     
 </template>
 
 <script>
+import Draggable from 'vuedraggable'
 import TodoItem from '@/components/Todo/Item'
 import DeleteConfirmation from '@/components/Modal/DeleteConfirmation'
 
 export default {
     name: 'Todo',
     components: {
+        Draggable,
         TodoItem,
         DeleteConfirmation
     },
@@ -66,10 +86,24 @@ export default {
         },
         async setTasksFromDb() {
             await this.$store.dispatch('setAllTasks')
+        },
+        async toggleSort() {
+            await this.$store.dispatch('toggleSort')
         }
     },
     mounted () {
         this.setTasksFromDb();
+    },
+    // From draggable documentation
+    computed: {
+        myList: {
+            get() {
+                return this.$store.state.todoItems
+            },
+            set(value) {
+                this.$store.dispatch('completeSort', value)
+            }
+        }
     },
 }
 </script>
