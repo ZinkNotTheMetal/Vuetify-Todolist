@@ -5,11 +5,16 @@
         @click="flipTaskCompleted(task.id)"
     >
         <v-list-item-action>
-            <v-checkbox
-                :input-value="task.isDone"
-                color="primary"
-            >
-            </v-checkbox>
+            <template v-if="$store.state.sorting">
+                <v-icon>mdi-menu</v-icon>
+            </template>
+            <template v-else>
+                <v-checkbox
+                    :input-value="task.isDone"
+                    color="primary"
+                >
+                </v-checkbox>
+            </template>
         </v-list-item-action>
         <v-list-item-content>
             <v-list-item-title

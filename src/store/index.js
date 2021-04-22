@@ -16,12 +16,17 @@ export default new Vuex.Store({
         show: false,
         text: ''
       },
-      todoItems: []
+      todoItems: [],
+      sorting: false,
   },
 
   mutations: {
     flipDrawer(state) {
       state.drawer = !state.drawer
+    },
+
+    toggleSort(state) {
+      state.sorting = !state.sorting
     },
 
     deleteTask(state, taskId) {
@@ -62,7 +67,7 @@ export default new Vuex.Store({
     // Add a new Todo Task
     async addTask({ commit }, newTaskTitle) {
       let newTask = {
-        id: moment().format('X'),
+        id: Number(moment().format('X')),
         title: newTaskTitle,
         isDone: false,
         dueDate: null
@@ -93,9 +98,15 @@ export default new Vuex.Store({
     },
 
     // Set tasks from db to store
-    async setAllTasks({ commit }) {
+    async getTasksFromDataStore({ commit }) {
       db.collection(todoCollection).get().then(documents => {
         commit('setTasks', documents)
+      })
+    },
+
+    async setTasks({ commit }, tasks) {
+      db.collection(todoCollection).set(tasks).then(documents => {
+        commit('setTasks', tasks)
       })
     },
 
@@ -112,7 +123,12 @@ export default new Vuex.Store({
         commit('updateTask', { taskId, newTaskTitle, newDueDate })
         commit('openSnackBar', 'Task Successfully Updated!')
       })
+    },
+
+    async toggleSort({ commit }) {
+      commit('toggleSort')
     }
+
   },
 
   modules: {
